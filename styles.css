@@ -21,6 +21,87 @@ body {
   background: var(--bwk-bg);
 }
 
+/* hidden 속성이 적용된 인증·목록 화면을 확실히 숨깁니다. */
+[hidden] { display: none !important; }
+
+/* 로그인 화면 전체에 동일한 Pretendard 타이포그래피를 적용합니다. */
+.bwk-login {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.85fr) minmax(440px, 1.15fr);
+  min-height: 100vh;
+  color: var(--bwk-ink);
+  background: #f7f4f0;
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 로그인 화면 내부 요소의 크기 계산을 일관되게 유지합니다. */
+.bwk-login,
+.bwk-login * { box-sizing: border-box; }
+
+/* 브랜드 영역은 오렌지와 차콜의 절제된 배경으로 구성합니다. */
+.bwk-login__visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-width: 0;
+  padding: 72px;
+  overflow: hidden;
+  color: #fff;
+  background: #25211e;
+}
+
+/* 부드러운 브랜드 빛 효과는 콘텐츠를 방해하지 않는 장식 요소입니다. */
+.bwk-login__glow {
+  position: absolute;
+  top: -140px;
+  right: -180px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 122, 0, 0.72), rgba(244, 122, 0, 0));
+  filter: blur(16px);
+}
+
+/* 제공된 브랜드 원본은 비율을 변경하지 않고 표시합니다. */
+.bwk-login__visual img { position: relative; width: 112px; height: 92px; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); }
+.bwk-login__visual strong { position: relative; margin-top: 18px; font-size: 13px; letter-spacing: 0.2em; }
+.bwk-login__visual p { position: relative; margin: 24px 0 0; font-size: clamp(30px, 3.2vw, 52px); font-weight: 750; line-height: 1.2; letter-spacing: -0.04em; }
+
+/* 로그인 카드는 읽기 좋은 최대 폭으로 중앙 정렬합니다. */
+.bwk-login__card {
+  align-self: center;
+  width: min(100% - 48px, 440px);
+  margin: 48px auto;
+  padding: 42px;
+  border: 1px solid rgba(222, 219, 215, 0.9);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--bwk-shadow);
+}
+
+.bwk-login__card h1 { margin: 7px 0 0; font-size: 31px; line-height: 1.2; letter-spacing: -0.03em; }
+.bwk-login__description { margin: 13px 0 29px; color: var(--bwk-muted); font-size: 15px; line-height: 1.65; }
+.bwk-login__card .bwk-field { display: flex; flex-direction: column; gap: 7px; margin-top: 17px; }
+.bwk-login__card .bwk-field > span { color: #4c4844; font-size: 14px; font-weight: 700; }
+.bwk-login__card input { width: 100%; min-height: 48px; padding: 0 14px; border: 1px solid var(--bwk-line); border-radius: 11px; color: var(--bwk-ink); background: #fff; font: inherit; font-size: 16px; }
+.bwk-login__card input:focus { border-color: var(--bwk-orange); outline: 3px solid rgba(244, 122, 0, 0.16); outline-offset: 1px; }
+.bwk-login .bwk-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border: 1px solid transparent; border-radius: 12px; color: #fff; background: var(--bwk-orange); font: inherit; font-weight: 750; cursor: pointer; transition: background-color 180ms ease, box-shadow 180ms ease; }
+.bwk-login .bwk-button:hover { background: var(--bwk-orange-dark); box-shadow: 0 8px 20px rgba(244, 122, 0, 0.20); }
+.bwk-login .bwk-button:focus-visible { outline: 3px solid rgba(244, 122, 0, 0.32); outline-offset: 3px; }
+.bwk-login .bwk-button:disabled { cursor: not-allowed; opacity: 0.52; box-shadow: none; }
+.bwk-field-error { min-height: 18px; color: var(--bwk-danger); font-size: 12px; }
+.bwk-login__error { min-height: 22px; margin: 12px 0 0; color: var(--bwk-danger); font-size: 13px; line-height: 1.5; }
+.bwk-login__submit { width: 100%; margin-top: 6px; }
+.bwk-login__help { display: block; margin-top: 16px; color: var(--bwk-muted); text-align: center; font-size: 12px; }
+
+/* 연결 정보가 없을 때 로그인 대신 설정 안내를 강조합니다. */
+.bwk-setup-notice { display: flex; flex-direction: column; gap: 3px; margin-bottom: 20px; padding: 13px 14px; border: 1px solid #f1c59e; border-radius: 11px; color: #713b0c; background: var(--bwk-orange-soft); font-size: 13px; }
+.bwk-setup-notice code { font-family: Consolas, monospace; }
+
 /* 전체 앱에 Pretendard 계열 폰트와 안전한 줄바꿈을 적용합니다. */
 #bwk-quote-app {
   min-height: 100vh;
@@ -53,6 +134,14 @@ body {
   backdrop-filter: blur(16px);
 }
 
+/* 상단 메뉴는 화면 크기에 따라 자연스럽게 줄바꿈됩니다. */
+#bwk-quote-app .bwk-topbar__actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
+#bwk-quote-app .bwk-nav-button { min-height: 40px; padding: 0 11px; border: 0; border-radius: 9px; color: var(--bwk-muted); background: transparent; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+#bwk-quote-app .bwk-nav-button:hover,
+#bwk-quote-app .bwk-nav-button.is-active { color: var(--bwk-ink); background: #ece9e5; }
+#bwk-quote-app .bwk-logout { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--bwk-line); border-radius: 11px; color: var(--bwk-muted); background: #fff; cursor: pointer; }
+#bwk-quote-app .bwk-logout:hover { color: var(--bwk-danger); border-color: #efb3ad; }
+
 /* 브랜드 영역을 로고와 설명으로 정렬합니다. */
 #bwk-quote-app .bwk-brand {
   display: inline-flex;
@@ -79,7 +168,7 @@ body {
 }
 
 #bwk-quote-app .bwk-brand__copy strong { font-size: 16px; }
-#bwk-quote-app .bwk-brand__copy small { margin-top: 2px; color: var(--bwk-muted); font-size: 12px; }
+#bwk-quote-app .bwk-brand__copy small { margin-top: 2px; color: var(--bwk-muted); font-size: 13px; }
 
 /* 모든 버튼의 공통 크기와 상호작용을 정의합니다. */
 #bwk-quote-app .bwk-button {
@@ -98,7 +187,7 @@ body {
 }
 
 /* 키보드 사용자를 위한 명확한 포커스 링입니다. */
-#bwk-quote-app :is(button, input, textarea, a):focus-visible {
+#bwk-quote-app :is(button, input, textarea, select, a):focus-visible {
   outline: 3px solid rgba(244, 122, 0, 0.32);
   outline-offset: 3px;
 }
@@ -116,6 +205,7 @@ body {
 #bwk-quote-app .bwk-button--small { min-height: 38px; padding: 0 13px; font-size: 13px; }
 #bwk-quote-app .bwk-button--ghost { width: 100%; color: var(--bwk-muted); background: transparent; }
 #bwk-quote-app .bwk-button--ghost:hover { color: var(--bwk-danger); background: #fff; }
+#bwk-quote-app .bwk-button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; box-shadow: none; }
 
 /* 편집기와 미리보기의 최대 너비 및 두 열 배치를 정의합니다. */
 #bwk-quote-app .bwk-workspace {
@@ -146,9 +236,9 @@ body {
   margin-bottom: 28px;
 }
 
-#bwk-quote-app .bwk-eyebrow { color: var(--bwk-orange-dark); font-size: 11px; font-weight: 800; letter-spacing: 0.15em; }
+#bwk-quote-app .bwk-eyebrow { color: var(--bwk-orange-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.15em; }
 #bwk-quote-app .bwk-editor h1 { margin: 5px 0 0; font-size: 24px; line-height: 1.25; }
-#bwk-quote-app .bwk-save-status { flex: none; padding: 5px 9px; border-radius: 999px; color: #4d4945; background: #eeece9; font-size: 11px; }
+#bwk-quote-app .bwk-save-status { flex: none; padding: 5px 9px; border-radius: 999px; color: #4d4945; background: #eeece9; font-size: 12px; }
 
 /* 각 입력 묶음의 기본 fieldset 스타일을 초기화하고 간격을 부여합니다. */
 #bwk-quote-app .bwk-form-section {
@@ -166,25 +256,26 @@ body {
 #bwk-quote-app .bwk-form-grid { display: grid; gap: 16px; margin-top: 17px; }
 #bwk-quote-app .bwk-form-grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 #bwk-quote-app .bwk-field { display: flex; flex-direction: column; min-width: 0; gap: 7px; }
-#bwk-quote-app .bwk-field > span { color: #4c4844; font-size: 13px; font-weight: 700; }
-#bwk-quote-app .bwk-field > small { color: var(--bwk-muted); font-size: 11px; line-height: 1.45; }
+#bwk-quote-app .bwk-field > span { color: #4c4844; font-size: 14px; font-weight: 700; }
+#bwk-quote-app .bwk-field > small { color: var(--bwk-muted); font-size: 12px; line-height: 1.5; }
 
 /* 입력 요소에 동일한 크기와 테두리를 적용합니다. */
-#bwk-quote-app :is(input, textarea) {
+#bwk-quote-app :is(input, textarea, select) {
   width: 100%;
   border: 1px solid var(--bwk-line);
   border-radius: 10px;
   color: var(--bwk-ink);
   background: #fff;
   font: inherit;
-  font-size: 14px;
+  font-size: 15px;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
 #bwk-quote-app input { min-height: 44px; padding: 0 12px; }
+#bwk-quote-app select { min-height: 44px; padding: 0 34px 0 12px; appearance: none; background-image: linear-gradient(45deg, transparent 50%, #777 50%), linear-gradient(135deg, #777 50%, transparent 50%); background-position: calc(100% - 16px) 19px, calc(100% - 11px) 19px; background-repeat: no-repeat; background-size: 5px 5px, 5px 5px; }
 #bwk-quote-app textarea { padding: 11px 12px; line-height: 1.6; resize: vertical; }
-#bwk-quote-app :is(input, textarea):hover { border-color: #b9b4ae; }
-#bwk-quote-app :is(input, textarea):focus { border-color: var(--bwk-orange); box-shadow: 0 0 0 3px rgba(244, 122, 0, 0.10); }
+#bwk-quote-app :is(input, textarea, select):hover { border-color: #b9b4ae; }
+#bwk-quote-app :is(input, textarea, select):focus { border-color: var(--bwk-orange); box-shadow: 0 0 0 3px rgba(244, 122, 0, 0.10); }
 
 /* 동적 견적 항목 사이에 일관된 간격을 둡니다. */
 #bwk-quote-app .bwk-items { display: grid; gap: 12px; margin-top: 17px; }
@@ -197,13 +288,13 @@ body {
 #bwk-quote-app .bwk-tax-control { margin-top: 14px; padding: 14px; border-radius: 12px; background: var(--bwk-orange-soft); }
 #bwk-quote-app .bwk-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
 #bwk-quote-app .bwk-switch-row span { display: flex; flex-direction: column; }
-#bwk-quote-app .bwk-switch-row strong { font-size: 13px; }
-#bwk-quote-app .bwk-switch-row small { color: var(--bwk-muted); font-size: 11px; }
+#bwk-quote-app .bwk-switch-row strong { font-size: 14px; }
+#bwk-quote-app .bwk-switch-row small { color: var(--bwk-muted); font-size: 12px; }
 #bwk-quote-app .bwk-switch-row input { width: 20px; min-height: 20px; accent-color: var(--bwk-orange); }
 
 /* 미리보기 패널은 넓은 화면에서 작업 중 같은 위치를 유지합니다. */
 #bwk-quote-app .bwk-preview-panel { min-width: 0; align-self: start; position: sticky; top: 104px; }
-#bwk-quote-app .bwk-preview-label { display: flex; justify-content: space-between; margin: 0 auto 10px; width: min(100%, 794px); color: var(--bwk-muted); font-size: 12px; }
+#bwk-quote-app .bwk-preview-label { display: flex; justify-content: space-between; margin: 0 auto 10px; width: min(100%, 794px); color: var(--bwk-muted); font-size: 13px; }
 
 /* A4 210:297 비율의 종이 화면을 구성합니다. */
 #bwk-quote-app .bwk-paper {
@@ -220,31 +311,31 @@ body {
 #bwk-quote-app .bwk-paper__header { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 30px; border-bottom: 3px solid var(--bwk-ink); }
 #bwk-quote-app .bwk-paper__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
 #bwk-quote-app .bwk-paper__brand img { width: 82px; height: 56px; object-fit: contain; object-position: left center; }
-#bwk-quote-app .bwk-paper__brand span { color: var(--bwk-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.18em; }
+#bwk-quote-app .bwk-paper__brand span { color: var(--bwk-muted); font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; }
 #bwk-quote-app .bwk-paper__title { text-align: right; }
-#bwk-quote-app .bwk-paper__title span { color: var(--bwk-orange-dark); font-size: 9px; font-weight: 800; letter-spacing: 0.2em; }
+#bwk-quote-app .bwk-paper__title span { color: var(--bwk-orange-dark); font-size: 10px; font-weight: 800; letter-spacing: 0.2em; }
 #bwk-quote-app .bwk-paper__title h2 { margin: 1px 0 0; font-size: 34px; line-height: 1.15; letter-spacing: -0.03em; }
 
 /* 고객 정보와 문서 정보를 두 열로 구성합니다. */
 #bwk-quote-app .bwk-paper__intro { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 30px; padding: 28px 0; }
-#bwk-quote-app .bwk-paper-label { color: var(--bwk-orange-dark); font-size: 9px; font-weight: 800; letter-spacing: 0.14em; }
+#bwk-quote-app .bwk-paper-label { color: var(--bwk-orange-dark); font-size: 10.5px; font-weight: 800; letter-spacing: 0.14em; }
 #bwk-quote-app .bwk-client-block strong { display: block; margin: 5px 0 8px; font-size: 19px; line-height: 1.3; }
-#bwk-quote-app .bwk-client-block p { margin: 2px 0; color: var(--bwk-muted); font-size: 10px; }
+#bwk-quote-app .bwk-client-block p { margin: 2px 0; color: var(--bwk-muted); font-size: 11.5px; }
 #bwk-quote-app .bwk-meta-list { margin: 0; }
-#bwk-quote-app .bwk-meta-list div { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 5px 0; border-bottom: 1px solid #ece9e5; font-size: 10px; }
+#bwk-quote-app .bwk-meta-list div { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid #ece9e5; font-size: 11.5px; }
 #bwk-quote-app .bwk-meta-list dt { color: var(--bwk-muted); }
 #bwk-quote-app .bwk-meta-list dd { margin: 0; text-align: right; font-weight: 700; }
 
 /* 프로젝트명은 주황색 밴드로 시각적 위계를 부여합니다. */
 #bwk-quote-app .bwk-project-band { display: flex; align-items: center; gap: 20px; padding: 14px 18px; color: #fff; background: var(--bwk-orange); }
-#bwk-quote-app .bwk-project-band span { flex: none; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; }
-#bwk-quote-app .bwk-project-band strong { min-width: 0; font-size: 14px; line-height: 1.35; }
+#bwk-quote-app .bwk-project-band span { flex: none; font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; }
+#bwk-quote-app .bwk-project-band strong { min-width: 0; font-size: 15px; line-height: 1.35; }
 
 /* 견적 항목 표의 열 너비와 가독성을 제어합니다. */
 #bwk-quote-app .bwk-table-wrap { margin-top: 22px; }
-#bwk-quote-app .bwk-quote-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9px; }
-#bwk-quote-app .bwk-quote-table th { padding: 9px 7px; border-bottom: 1px solid var(--bwk-ink); color: var(--bwk-muted); text-align: left; font-size: 8px; }
-#bwk-quote-app .bwk-quote-table td { padding: 11px 7px; border-bottom: 1px solid #ece9e5; vertical-align: top; overflow-wrap: break-word; }
+#bwk-quote-app .bwk-quote-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10.5px; }
+#bwk-quote-app .bwk-quote-table th { padding: 10px 7px; border-bottom: 1px solid var(--bwk-ink); color: var(--bwk-muted); text-align: left; font-size: 9.5px; }
+#bwk-quote-app .bwk-quote-table td { padding: 12px 7px; border-bottom: 1px solid #ece9e5; vertical-align: top; overflow-wrap: break-word; }
 #bwk-quote-app .bwk-quote-table th:nth-child(1) { width: 23%; }
 #bwk-quote-app .bwk-quote-table th:nth-child(2) { width: 31%; }
 #bwk-quote-app .bwk-quote-table th:nth-child(3) { width: 10%; text-align: center; }
@@ -256,29 +347,71 @@ body {
 
 /* 금액 합계는 우측 박스 안에서 단계적으로 강조합니다. */
 #bwk-quote-app .bwk-total-box { width: 270px; margin: 18px 0 0 auto; padding: 13px 16px; background: #f8f6f3; }
-#bwk-quote-app .bwk-total-box > div { display: flex; justify-content: space-between; gap: 20px; padding: 4px 0; font-size: 10px; }
+#bwk-quote-app .bwk-total-box > div { display: flex; justify-content: space-between; gap: 20px; padding: 5px 0; font-size: 11.5px; }
 #bwk-quote-app .bwk-total-box span { color: var(--bwk-muted); }
 #bwk-quote-app .bwk-total-box__grand { margin-top: 7px; padding-top: 10px !important; border-top: 1px solid var(--bwk-ink); }
 #bwk-quote-app .bwk-total-box__grand span { color: var(--bwk-ink); font-weight: 800; }
-#bwk-quote-app .bwk-total-box__grand strong { color: var(--bwk-orange-dark); font-size: 16px; }
+#bwk-quote-app .bwk-total-box__grand strong { color: var(--bwk-orange-dark); font-size: 18px; }
 
 /* 작업 범위와 조건은 반복 가능한 정보 블록으로 구성합니다. */
 #bwk-quote-app .bwk-paper__details { display: grid; gap: 13px; margin-top: 24px; }
 #bwk-quote-app .bwk-paper__details section { break-inside: avoid; }
-#bwk-quote-app .bwk-paper__details h3 { margin: 0 0 4px; font-size: 10px; }
-#bwk-quote-app .bwk-paper__details p { margin: 0; color: #5d5853; font-size: 9px; line-height: 1.65; white-space: pre-line; }
+#bwk-quote-app .bwk-paper__details h3 { margin: 0 0 5px; font-size: 12px; }
+#bwk-quote-app .bwk-paper__details p { margin: 0; color: #514c47; font-size: 10.5px; line-height: 1.65; white-space: pre-line; }
 
 /* 하단 사업자 정보와 서명을 양쪽에 배치합니다. */
 #bwk-quote-app .bwk-paper__footer { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; padding-top: 19px; border-top: 1px solid var(--bwk-line); }
-#bwk-quote-app .bwk-company-info strong { color: var(--bwk-orange-dark); font-size: 12px; }
-#bwk-quote-app .bwk-company-info p { margin: 2px 0; color: var(--bwk-muted); font-size: 8px; }
+#bwk-quote-app .bwk-company-info strong { color: var(--bwk-orange-dark); font-size: 13px; }
+#bwk-quote-app .bwk-company-info p { margin: 3px 0; color: #5d5853; font-size: 9.5px; }
 #bwk-quote-app .bwk-signature { text-align: right; }
-#bwk-quote-app .bwk-signature span { display: block; color: var(--bwk-muted); font-size: 8px; }
-#bwk-quote-app .bwk-signature strong { display: block; margin-top: 8px; font-size: 11px; }
+#bwk-quote-app .bwk-signature span { display: block; color: #5d5853; font-size: 9.5px; }
+#bwk-quote-app .bwk-signature strong { display: block; margin-top: 8px; font-size: 12.5px; }
+
+/* 저장 목록은 넓은 화면에서도 읽기 좋은 최대 폭을 유지합니다. */
+#bwk-quote-app .bwk-list-view { width: min(100%, 1180px); min-height: calc(100vh - 76px); margin: 0 auto; padding: 46px 28px 70px; }
+#bwk-quote-app .bwk-list-view__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+#bwk-quote-app .bwk-list-view h1 { margin: 6px 0 0; font-size: 32px; line-height: 1.2; letter-spacing: -0.03em; }
+#bwk-quote-app .bwk-list-view__header p { margin: 8px 0 0; color: var(--bwk-muted); font-size: 15px; }
+
+/* 검색 입력은 아이콘과 텍스트 영역을 하나의 카드로 결합합니다. */
+#bwk-quote-app .bwk-search { display: flex; align-items: center; gap: 10px; width: min(100%, 520px); margin-top: 28px; padding: 0 14px; border: 1px solid var(--bwk-line); border-radius: 12px; color: var(--bwk-muted); background: #fff; }
+#bwk-quote-app .bwk-search input { min-width: 0; border: 0; background: transparent; box-shadow: none; }
+#bwk-quote-app .bwk-search input:focus { box-shadow: none; }
+#bwk-quote-app .bwk-cloud-message { min-height: 22px; margin: 12px 0 0; color: var(--bwk-muted); font-size: 13px; }
+
+/* 견적 목록은 카드형 표 구조로 정보를 빠르게 비교하도록 합니다. */
+#bwk-quote-app .bwk-quote-list { display: grid; gap: 10px; margin-top: 6px; }
+#bwk-quote-app .bwk-quote-card { display: grid; grid-template-columns: minmax(110px, 0.8fr) minmax(180px, 1.4fr) minmax(130px, 1fr) minmax(110px, 0.8fr) auto; align-items: center; gap: 18px; padding: 18px 20px; border: 1px solid var(--bwk-line); border-radius: 14px; background: #fff; transition: border-color 180ms ease, box-shadow 180ms ease; }
+#bwk-quote-app .bwk-quote-card:hover { border-color: #c8c2bc; box-shadow: 0 8px 24px rgba(46, 39, 32, 0.06); }
+#bwk-quote-app .bwk-quote-card__number { color: var(--bwk-muted); font-size: 12px; font-weight: 700; }
+#bwk-quote-app .bwk-quote-card__main { min-width: 0; }
+#bwk-quote-app .bwk-quote-card__main strong { display: block; overflow: hidden; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+#bwk-quote-app .bwk-quote-card__main span { display: block; margin-top: 3px; overflow: hidden; color: var(--bwk-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+#bwk-quote-app .bwk-quote-card__amount { font-size: 15px; text-align: right; }
+#bwk-quote-app .bwk-status { justify-self: start; padding: 5px 9px; border-radius: 999px; color: #4d4945; background: #eeece9; font-size: 11px; font-weight: 750; }
+#bwk-quote-app .bwk-status--sent { color: #155eef; background: #eff4ff; }
+#bwk-quote-app .bwk-status--approved { color: #067647; background: #ecfdf3; }
+#bwk-quote-app .bwk-status--cancelled { color: #b42318; background: #fef3f2; }
+#bwk-quote-app .bwk-quote-card__actions { display: flex; gap: 6px; }
+#bwk-quote-app .bwk-card-action { min-height: 40px; padding: 0 12px; border: 1px solid var(--bwk-line); border-radius: 9px; color: var(--bwk-ink); background: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+#bwk-quote-app .bwk-card-action:hover { border-color: var(--bwk-orange); color: var(--bwk-orange-dark); }
+#bwk-quote-app .bwk-card-action--delete:hover { border-color: #efb3ad; color: var(--bwk-danger); }
+
+/* 저장된 견적이 없을 때 다음 행동을 명확히 안내합니다. */
+#bwk-quote-app .bwk-empty-state { display: flex; flex-direction: column; align-items: center; gap: 7px; margin-top: 20px; padding: 70px 24px; border: 1px dashed #cbc5bf; border-radius: 16px; color: var(--bwk-muted); background: rgba(255, 255, 255, 0.5); text-align: center; }
+#bwk-quote-app .bwk-empty-state strong { color: var(--bwk-ink); font-size: 15px; }
+#bwk-quote-app .bwk-empty-state span { font-size: 13px; }
+
+/* 토스트는 저장 결과를 가리지 않는 우측 하단에 표시합니다. */
+#bwk-quote-app .bwk-toast { position: fixed; right: 24px; bottom: 24px; z-index: 40; max-width: min(360px, calc(100vw - 32px)); padding: 13px 16px; border-radius: 11px; color: #fff; background: #25211e; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18); font-size: 13px; }
+
+/* PC에서만 지정된 줄바꿈을 표시합니다. */
+.bwk-pc-br { display: none; }
 
 /* PC 구간에서는 넓은 작업 공간과 A4 원본 크기를 유지합니다. */
 @media (min-width: 1500px) {
   #bwk-quote-app .bwk-workspace { padding-top: 36px; padding-bottom: 56px; }
+  .bwk-pc-br { display: inline; }
 }
 
 /* 노트북 구간에서는 미리보기를 적절히 축소하고 입력 여백을 줄입니다. */
@@ -287,13 +420,21 @@ body {
   #bwk-quote-app .bwk-editor { padding: 22px; }
   #bwk-quote-app .bwk-paper { min-height: 0; padding: 46px 44px 38px; }
   #bwk-quote-app .bwk-paper__intro { grid-template-columns: minmax(0, 1fr) 210px; }
+  .bwk-login__visual { padding: 48px; }
 }
 
 /* 모바일과 태블릿에서는 편집기 다음에 미리보기가 한 열로 표시됩니다. */
 @media (max-width: 767px) {
+  .bwk-login { grid-template-columns: minmax(0, 1fr); min-height: 100svh; }
+  .bwk-login__visual { display: none; }
+  .bwk-login__card { width: calc(100% - 28px); margin: auto; padding: 30px 22px; border-radius: 18px; }
+  .bwk-login__card h1 { font-size: 26px; }
   #bwk-quote-app .bwk-topbar { min-height: 68px; padding: 10px 16px; }
   #bwk-quote-app .bwk-brand__logo { width: 39px; height: 39px; }
   #bwk-quote-app .bwk-brand__copy small { display: none; }
+  #bwk-quote-app .bwk-topbar { align-items: flex-start; flex-wrap: wrap; }
+  #bwk-quote-app .bwk-topbar__actions { width: 100%; justify-content: flex-start; overflow-x: auto; padding-top: 7px; }
+  #bwk-quote-app .bwk-topbar__actions .bwk-button { flex: none; }
   #bwk-quote-app .bwk-button--primary { min-height: 44px; padding: 0 13px; font-size: 13px; }
   #bwk-quote-app .bwk-workspace { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 14px; }
   #bwk-quote-app .bwk-editor { padding: 20px 16px; }
@@ -305,12 +446,22 @@ body {
   #bwk-quote-app .bwk-paper { width: 794px; min-height: 1123px; margin: 0; padding: 58px 62px 46px; transform: scale(calc((100vw - 28px) / 794)); transform-origin: top left; }
   #bwk-quote-app .bwk-preview-panel { height: calc(1123px * ((100vw - 28px) / 794) + 38px); }
   #bwk-quote-app .bwk-preview-label { width: 100%; }
+  #bwk-quote-app .bwk-list-view { min-height: calc(100vh - 126px); padding: 28px 14px 50px; }
+  #bwk-quote-app .bwk-list-view__header { align-items: flex-start; flex-direction: column; }
+  #bwk-quote-app .bwk-list-view h1 { font-size: 26px; }
+  #bwk-quote-app .bwk-quote-card { grid-template-columns: minmax(0, 1fr) auto; gap: 11px; padding: 16px; }
+  #bwk-quote-app .bwk-quote-card__number { grid-column: 1; }
+  #bwk-quote-app .bwk-quote-card__main { grid-column: 1 / -1; grid-row: 2; }
+  #bwk-quote-app .bwk-quote-card__amount { grid-column: 1; grid-row: 3; text-align: left; }
+  #bwk-quote-app .bwk-status { grid-column: 2; grid-row: 1; }
+  #bwk-quote-app .bwk-quote-card__actions { grid-column: 2; grid-row: 3; }
+  #bwk-quote-app .bwk-toast { right: 16px; bottom: 16px; }
 }
 
 /* 모션 감소 설정을 사용하면 모든 전환을 즉시 처리합니다. */
 @media (prefers-reduced-motion: reduce) {
   #bwk-quote-app .bwk-button,
-  #bwk-quote-app :is(input, textarea) { transition: none; }
+  #bwk-quote-app :is(input, textarea, select) { transition: none; }
 }
 
 /* 인쇄 시에는 편집 UI를 숨기고 A4 견적서만 출력합니다. */
@@ -320,6 +471,8 @@ body {
   body { width: 210mm; min-height: 297mm; background: #fff !important; }
   #bwk-quote-app .bwk-topbar,
   #bwk-quote-app .bwk-editor,
+  #bwk-quote-app .bwk-list-view,
+  #bwk-quote-app .bwk-toast,
   #bwk-quote-app .bwk-preview-label { display: none !important; }
   #bwk-quote-app .bwk-workspace { display: block; width: auto; margin: 0; padding: 0; }
   #bwk-quote-app .bwk-preview-panel { position: static; width: auto; height: auto; overflow: visible; }

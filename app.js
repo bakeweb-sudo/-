@@ -132,6 +132,7 @@ const bwkCollectState = () => ({
   issueDate: bwkGet('bwk-issue-date').value,
   validDays: bwkGet('bwk-valid-days').value,
   projectName: bwkGet('bwk-project-name').value,
+  status: bwkGet('bwk-quote-status').value,
   clientName: bwkGet('bwk-client-name').value,
   clientManager: bwkGet('bwk-client-manager').value,
   clientPhone: bwkGet('bwk-client-phone').value,
@@ -142,6 +143,33 @@ const bwkCollectState = () => ({
   taxIncluded: bwkGet('bwk-tax-included').checked,
   items: bwkItems
 });
+
+// 저장된 견적서 상태를 편집 화면 전체에 적용합니다.
+const bwkApplyState = (saved) => {
+  // 각 저장 필드를 대응하는 입력 요소에 안전하게 연결합니다.
+  const mapping = {
+    'bwk-quote-number': saved.quoteNumber,
+    'bwk-issue-date': saved.issueDate,
+    'bwk-valid-days': saved.validDays,
+    'bwk-project-name': saved.projectName,
+    'bwk-quote-status': saved.status || 'draft',
+    'bwk-client-name': saved.clientName,
+    'bwk-client-manager': saved.clientManager,
+    'bwk-client-phone': saved.clientPhone,
+    'bwk-client-email': saved.clientEmail,
+    'bwk-scope': saved.scope?.trim() ? saved.scope : bwkDefaultScope,
+    'bwk-payment-terms': saved.paymentTerms,
+    'bwk-note': saved.note
+  };
+  // 값이 존재하는 필드만 변경해 누락된 이전 버전 데이터도 불러올 수 있습니다.
+  Object.entries(mapping).forEach(([id, value]) => { if (value !== undefined) bwkGet(id).value = value; });
+  // 부가세 설정과 견적 항목 배열을 복원합니다.
+  bwkGet('bwk-tax-included').checked = saved.taxIncluded !== false;
+  bwkItems = Array.isArray(saved.items) && saved.items.length ? structuredClone(saved.items) : structuredClone(bwkDefaultItems);
+  // 편집 항목과 PDF 미리보기를 즉시 새 값으로 다시 그립니다.
+  bwkRenderItemEditor();
+  bwkUpdatePreview();
+};
 
 // 상태를 브라우저 localStorage에 저장합니다.
 const bwkSaveState = () => {
@@ -160,23 +188,8 @@ const bwkLoadState = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(bwkStorageKey) || 'null');
     if (!saved) return false;
-    const mapping = {
-      'bwk-quote-number': saved.quoteNumber,
-      'bwk-issue-date': saved.issueDate,
-      'bwk-valid-days': saved.validDays,
-      'bwk-project-name': saved.projectName,
-      'bwk-client-name': saved.clientName,
-      'bwk-client-manager': saved.clientManager,
-      'bwk-client-phone': saved.clientPhone,
-      'bwk-client-email': saved.clientEmail,
-      // 기존 초안에 작업 범위가 비어 있으면 새 기본 범위를 자동으로 채웁니다.
-      'bwk-scope': saved.scope?.trim() ? saved.scope : bwkDefaultScope,
-      'bwk-payment-terms': saved.paymentTerms,
-      'bwk-note': saved.note
-    };
-    Object.entries(mapping).forEach(([id, value]) => { if (value !== undefined) bwkGet(id).value = value; });
-    bwkGet('bwk-tax-included').checked = saved.taxIncluded !== false;
-    bwkItems = Array.isArray(saved.items) && saved.items.length ? saved.items : structuredClone(bwkDefaultItems);
+    // 공통 적용 함수를 사용해 브라우저 초안을 복원합니다.
+    bwkApplyState(saved);
     return true;
   } catch (error) {
     return false;
@@ -249,9 +262,11 @@ const bwkInitialize = () => {
     bwkGet('bwk-issue-date').value = localToday;
     bwkItems = structuredClone(bwkDefaultItems);
   }
-  // 초기 입력 화면과 미리보기를 한 번 렌더링합니다.
-  bwkRenderItemEditor();
-  bwkUpdatePreview();
+  // 저장된 초안이 없을 때만 초기 입력 화면과 미리보기를 새로 렌더링합니다.
+  if (!bwkGet('bwk-items').children.length) {
+    bwkRenderItemEditor();
+    bwkUpdatePreview();
+  }
 };
 
 // 필요한 DOM이 준비된 현재 시점에 앱을 시작합니다.
