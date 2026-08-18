@@ -1,0 +1,327 @@
+/* BAKEWEB 견적서 앱 전용 색상과 간격 토큰입니다. */
+:root {
+  --bwk-orange: #f47a00;
+  --bwk-orange-dark: #bd5300;
+  --bwk-orange-soft: #fff3e8;
+  --bwk-ink: #1e1c1a;
+  --bwk-muted: #6f6a64;
+  --bwk-line: #dedbd7;
+  --bwk-bg: #f4f2ef;
+  --bwk-paper: #ffffff;
+  --bwk-danger: #b42318;
+  --bwk-radius: 16px;
+  --bwk-shadow: 0 18px 55px rgba(46, 39, 32, 0.10);
+}
+
+/* 문서 자체의 기본 여백만 제거하며 컴포넌트 스타일은 bwk wrapper에 제한합니다. */
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bwk-bg);
+}
+
+/* 전체 앱에 Pretendard 계열 폰트와 안전한 줄바꿈을 적용합니다. */
+#bwk-quote-app {
+  min-height: 100vh;
+  color: var(--bwk-ink);
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 앱 내부 요소가 padding을 포함한 크기로 계산되도록 제한 적용합니다. */
+#bwk-quote-app,
+#bwk-quote-app * {
+  box-sizing: border-box;
+}
+
+/* 상단바는 작업 중에도 주요 동작이 보이도록 고정합니다. */
+#bwk-quote-app .bwk-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  padding: 12px 28px;
+  border-bottom: 1px solid rgba(222, 219, 215, 0.9);
+  background: rgba(250, 249, 247, 0.92);
+  backdrop-filter: blur(16px);
+}
+
+/* 브랜드 영역을 로고와 설명으로 정렬합니다. */
+#bwk-quote-app .bwk-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 원본 로고의 여백을 고려해 작은 프레임 안에서 표시합니다. */
+#bwk-quote-app .bwk-brand__logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+/* 브랜드 문구를 세로 방향으로 정돈합니다. */
+#bwk-quote-app .bwk-brand__copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+#bwk-quote-app .bwk-brand__copy strong { font-size: 16px; }
+#bwk-quote-app .bwk-brand__copy small { margin-top: 2px; color: var(--bwk-muted); font-size: 12px; }
+
+/* 모든 버튼의 공통 크기와 상호작용을 정의합니다. */
+#bwk-quote-app .bwk-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+/* 키보드 사용자를 위한 명확한 포커스 링입니다. */
+#bwk-quote-app :is(button, input, textarea, a):focus-visible {
+  outline: 3px solid rgba(244, 122, 0, 0.32);
+  outline-offset: 3px;
+}
+
+/* 주요 PDF 동작에 브랜드 색상을 적용합니다. */
+#bwk-quote-app .bwk-button--primary {
+  color: #fff;
+  background: var(--bwk-orange);
+  box-shadow: 0 8px 20px rgba(244, 122, 0, 0.22);
+}
+
+#bwk-quote-app .bwk-button--primary:hover { background: var(--bwk-orange-dark); transform: translateY(-1px); }
+#bwk-quote-app .bwk-button--outline { color: var(--bwk-ink); border-color: var(--bwk-line); background: #fff; }
+#bwk-quote-app .bwk-button--outline:hover { border-color: var(--bwk-orange); color: var(--bwk-orange-dark); }
+#bwk-quote-app .bwk-button--small { min-height: 38px; padding: 0 13px; font-size: 13px; }
+#bwk-quote-app .bwk-button--ghost { width: 100%; color: var(--bwk-muted); background: transparent; }
+#bwk-quote-app .bwk-button--ghost:hover { color: var(--bwk-danger); background: #fff; }
+
+/* 편집기와 미리보기의 최대 너비 및 두 열 배치를 정의합니다. */
+#bwk-quote-app .bwk-workspace {
+  display: grid;
+  grid-template-columns: minmax(400px, 520px) minmax(700px, 1fr);
+  gap: 28px;
+  width: min(100%, 1560px);
+  margin: 0 auto;
+  padding: 28px;
+}
+
+/* 편집 패널을 카드형 표면으로 구분합니다. */
+#bwk-quote-app .bwk-editor {
+  align-self: start;
+  padding: 26px;
+  border: 1px solid rgba(222, 219, 215, 0.88);
+  border-radius: var(--bwk-radius);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 35px rgba(46, 39, 32, 0.06);
+}
+
+/* 편집기 제목과 자동 저장 상태를 양쪽에 배치합니다. */
+#bwk-quote-app .bwk-editor__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+#bwk-quote-app .bwk-eyebrow { color: var(--bwk-orange-dark); font-size: 11px; font-weight: 800; letter-spacing: 0.15em; }
+#bwk-quote-app .bwk-editor h1 { margin: 5px 0 0; font-size: 24px; line-height: 1.25; }
+#bwk-quote-app .bwk-save-status { flex: none; padding: 5px 9px; border-radius: 999px; color: #4d4945; background: #eeece9; font-size: 11px; }
+
+/* 각 입력 묶음의 기본 fieldset 스타일을 초기화하고 간격을 부여합니다. */
+#bwk-quote-app .bwk-form-section {
+  min-width: 0;
+  margin: 0;
+  padding: 24px 0;
+  border: 0;
+  border-top: 1px solid var(--bwk-line);
+}
+
+#bwk-quote-app .bwk-form-section legend { padding: 0; font-size: 15px; font-weight: 800; }
+#bwk-quote-app .bwk-legend-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+/* 입력 필드는 화면 크기에 따라 두 열 또는 한 열로 유연하게 배치됩니다. */
+#bwk-quote-app .bwk-form-grid { display: grid; gap: 16px; margin-top: 17px; }
+#bwk-quote-app .bwk-form-grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#bwk-quote-app .bwk-field { display: flex; flex-direction: column; min-width: 0; gap: 7px; }
+#bwk-quote-app .bwk-field > span { color: #4c4844; font-size: 13px; font-weight: 700; }
+#bwk-quote-app .bwk-field > small { color: var(--bwk-muted); font-size: 11px; line-height: 1.45; }
+
+/* 입력 요소에 동일한 크기와 테두리를 적용합니다. */
+#bwk-quote-app :is(input, textarea) {
+  width: 100%;
+  border: 1px solid var(--bwk-line);
+  border-radius: 10px;
+  color: var(--bwk-ink);
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+#bwk-quote-app input { min-height: 44px; padding: 0 12px; }
+#bwk-quote-app textarea { padding: 11px 12px; line-height: 1.6; resize: vertical; }
+#bwk-quote-app :is(input, textarea):hover { border-color: #b9b4ae; }
+#bwk-quote-app :is(input, textarea):focus { border-color: var(--bwk-orange); box-shadow: 0 0 0 3px rgba(244, 122, 0, 0.10); }
+
+/* 동적 견적 항목 사이에 일관된 간격을 둡니다. */
+#bwk-quote-app .bwk-items { display: grid; gap: 12px; margin-top: 17px; }
+#bwk-quote-app .bwk-item-row { display: grid; grid-template-columns: minmax(0, 1.25fr) 72px minmax(112px, 0.8fr) 44px; gap: 8px; padding: 13px; border: 1px solid var(--bwk-line); border-radius: 12px; background: #faf9f7; }
+#bwk-quote-app .bwk-item-row .bwk-item-description { grid-column: 1 / -1; }
+#bwk-quote-app .bwk-remove-item { width: 44px; height: 44px; padding: 0; border: 1px solid var(--bwk-line); border-radius: 10px; color: var(--bwk-muted); background: #fff; cursor: pointer; }
+#bwk-quote-app .bwk-remove-item:hover { border-color: #efb3ad; color: var(--bwk-danger); background: #fff6f5; }
+
+/* 부가세 선택 영역을 설명과 체크박스로 구성합니다. */
+#bwk-quote-app .bwk-tax-control { margin-top: 14px; padding: 14px; border-radius: 12px; background: var(--bwk-orange-soft); }
+#bwk-quote-app .bwk-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+#bwk-quote-app .bwk-switch-row span { display: flex; flex-direction: column; }
+#bwk-quote-app .bwk-switch-row strong { font-size: 13px; }
+#bwk-quote-app .bwk-switch-row small { color: var(--bwk-muted); font-size: 11px; }
+#bwk-quote-app .bwk-switch-row input { width: 20px; min-height: 20px; accent-color: var(--bwk-orange); }
+
+/* 미리보기 패널은 넓은 화면에서 작업 중 같은 위치를 유지합니다. */
+#bwk-quote-app .bwk-preview-panel { min-width: 0; align-self: start; position: sticky; top: 104px; }
+#bwk-quote-app .bwk-preview-label { display: flex; justify-content: space-between; margin: 0 auto 10px; width: min(100%, 794px); color: var(--bwk-muted); font-size: 12px; }
+
+/* A4 210:297 비율의 종이 화면을 구성합니다. */
+#bwk-quote-app .bwk-paper {
+  width: min(100%, 794px);
+  min-height: 1123px;
+  margin: 0 auto;
+  padding: 58px 62px 46px;
+  color: #201e1c;
+  background: var(--bwk-paper);
+  box-shadow: var(--bwk-shadow);
+}
+
+/* 견적서 상단의 브랜드와 제목을 정렬합니다. */
+#bwk-quote-app .bwk-paper__header { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 30px; border-bottom: 3px solid var(--bwk-ink); }
+#bwk-quote-app .bwk-paper__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+#bwk-quote-app .bwk-paper__brand img { width: 82px; height: 56px; object-fit: contain; object-position: left center; }
+#bwk-quote-app .bwk-paper__brand span { color: var(--bwk-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.18em; }
+#bwk-quote-app .bwk-paper__title { text-align: right; }
+#bwk-quote-app .bwk-paper__title span { color: var(--bwk-orange-dark); font-size: 9px; font-weight: 800; letter-spacing: 0.2em; }
+#bwk-quote-app .bwk-paper__title h2 { margin: 1px 0 0; font-size: 34px; line-height: 1.15; letter-spacing: -0.03em; }
+
+/* 고객 정보와 문서 정보를 두 열로 구성합니다. */
+#bwk-quote-app .bwk-paper__intro { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 30px; padding: 28px 0; }
+#bwk-quote-app .bwk-paper-label { color: var(--bwk-orange-dark); font-size: 9px; font-weight: 800; letter-spacing: 0.14em; }
+#bwk-quote-app .bwk-client-block strong { display: block; margin: 5px 0 8px; font-size: 19px; line-height: 1.3; }
+#bwk-quote-app .bwk-client-block p { margin: 2px 0; color: var(--bwk-muted); font-size: 10px; }
+#bwk-quote-app .bwk-meta-list { margin: 0; }
+#bwk-quote-app .bwk-meta-list div { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 5px 0; border-bottom: 1px solid #ece9e5; font-size: 10px; }
+#bwk-quote-app .bwk-meta-list dt { color: var(--bwk-muted); }
+#bwk-quote-app .bwk-meta-list dd { margin: 0; text-align: right; font-weight: 700; }
+
+/* 프로젝트명은 주황색 밴드로 시각적 위계를 부여합니다. */
+#bwk-quote-app .bwk-project-band { display: flex; align-items: center; gap: 20px; padding: 14px 18px; color: #fff; background: var(--bwk-orange); }
+#bwk-quote-app .bwk-project-band span { flex: none; font-size: 9px; font-weight: 800; letter-spacing: 0.12em; }
+#bwk-quote-app .bwk-project-band strong { min-width: 0; font-size: 14px; line-height: 1.35; }
+
+/* 견적 항목 표의 열 너비와 가독성을 제어합니다. */
+#bwk-quote-app .bwk-table-wrap { margin-top: 22px; }
+#bwk-quote-app .bwk-quote-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9px; }
+#bwk-quote-app .bwk-quote-table th { padding: 9px 7px; border-bottom: 1px solid var(--bwk-ink); color: var(--bwk-muted); text-align: left; font-size: 8px; }
+#bwk-quote-app .bwk-quote-table td { padding: 11px 7px; border-bottom: 1px solid #ece9e5; vertical-align: top; overflow-wrap: break-word; }
+#bwk-quote-app .bwk-quote-table th:nth-child(1) { width: 23%; }
+#bwk-quote-app .bwk-quote-table th:nth-child(2) { width: 31%; }
+#bwk-quote-app .bwk-quote-table th:nth-child(3) { width: 10%; text-align: center; }
+#bwk-quote-app .bwk-quote-table th:nth-child(4),
+#bwk-quote-app .bwk-quote-table th:nth-child(5) { width: 18%; text-align: right; }
+#bwk-quote-app .bwk-quote-table td:nth-child(3) { text-align: center; }
+#bwk-quote-app .bwk-quote-table td:nth-child(4),
+#bwk-quote-app .bwk-quote-table td:nth-child(5) { text-align: right; }
+
+/* 금액 합계는 우측 박스 안에서 단계적으로 강조합니다. */
+#bwk-quote-app .bwk-total-box { width: 270px; margin: 18px 0 0 auto; padding: 13px 16px; background: #f8f6f3; }
+#bwk-quote-app .bwk-total-box > div { display: flex; justify-content: space-between; gap: 20px; padding: 4px 0; font-size: 10px; }
+#bwk-quote-app .bwk-total-box span { color: var(--bwk-muted); }
+#bwk-quote-app .bwk-total-box__grand { margin-top: 7px; padding-top: 10px !important; border-top: 1px solid var(--bwk-ink); }
+#bwk-quote-app .bwk-total-box__grand span { color: var(--bwk-ink); font-weight: 800; }
+#bwk-quote-app .bwk-total-box__grand strong { color: var(--bwk-orange-dark); font-size: 16px; }
+
+/* 작업 범위와 조건은 반복 가능한 정보 블록으로 구성합니다. */
+#bwk-quote-app .bwk-paper__details { display: grid; gap: 13px; margin-top: 24px; }
+#bwk-quote-app .bwk-paper__details section { break-inside: avoid; }
+#bwk-quote-app .bwk-paper__details h3 { margin: 0 0 4px; font-size: 10px; }
+#bwk-quote-app .bwk-paper__details p { margin: 0; color: #5d5853; font-size: 9px; line-height: 1.65; white-space: pre-line; }
+
+/* 하단 사업자 정보와 서명을 양쪽에 배치합니다. */
+#bwk-quote-app .bwk-paper__footer { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; padding-top: 19px; border-top: 1px solid var(--bwk-line); }
+#bwk-quote-app .bwk-company-info strong { color: var(--bwk-orange-dark); font-size: 12px; }
+#bwk-quote-app .bwk-company-info p { margin: 2px 0; color: var(--bwk-muted); font-size: 8px; }
+#bwk-quote-app .bwk-signature { text-align: right; }
+#bwk-quote-app .bwk-signature span { display: block; color: var(--bwk-muted); font-size: 8px; }
+#bwk-quote-app .bwk-signature strong { display: block; margin-top: 8px; font-size: 11px; }
+
+/* PC 구간에서는 넓은 작업 공간과 A4 원본 크기를 유지합니다. */
+@media (min-width: 1500px) {
+  #bwk-quote-app .bwk-workspace { padding-top: 36px; padding-bottom: 56px; }
+}
+
+/* 노트북 구간에서는 미리보기를 적절히 축소하고 입력 여백을 줄입니다. */
+@media (min-width: 768px) and (max-width: 1499px) {
+  #bwk-quote-app .bwk-workspace { grid-template-columns: minmax(360px, 470px) minmax(540px, 1fr); gap: 20px; padding: 20px; }
+  #bwk-quote-app .bwk-editor { padding: 22px; }
+  #bwk-quote-app .bwk-paper { min-height: 0; padding: 46px 44px 38px; }
+  #bwk-quote-app .bwk-paper__intro { grid-template-columns: minmax(0, 1fr) 210px; }
+}
+
+/* 모바일과 태블릿에서는 편집기 다음에 미리보기가 한 열로 표시됩니다. */
+@media (max-width: 767px) {
+  #bwk-quote-app .bwk-topbar { min-height: 68px; padding: 10px 16px; }
+  #bwk-quote-app .bwk-brand__logo { width: 39px; height: 39px; }
+  #bwk-quote-app .bwk-brand__copy small { display: none; }
+  #bwk-quote-app .bwk-button--primary { min-height: 44px; padding: 0 13px; font-size: 13px; }
+  #bwk-quote-app .bwk-workspace { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 14px; }
+  #bwk-quote-app .bwk-editor { padding: 20px 16px; }
+  #bwk-quote-app .bwk-editor__heading { flex-direction: column; gap: 10px; }
+  #bwk-quote-app .bwk-editor h1 { font-size: 21px; }
+  #bwk-quote-app .bwk-form-grid--two { grid-template-columns: minmax(0, 1fr); }
+  #bwk-quote-app .bwk-item-row { grid-template-columns: minmax(0, 1fr) 64px 100px 44px; padding: 10px; }
+  #bwk-quote-app .bwk-preview-panel { position: static; overflow: hidden; }
+  #bwk-quote-app .bwk-paper { width: 794px; min-height: 1123px; margin: 0; padding: 58px 62px 46px; transform: scale(calc((100vw - 28px) / 794)); transform-origin: top left; }
+  #bwk-quote-app .bwk-preview-panel { height: calc(1123px * ((100vw - 28px) / 794) + 38px); }
+  #bwk-quote-app .bwk-preview-label { width: 100%; }
+}
+
+/* 모션 감소 설정을 사용하면 모든 전환을 즉시 처리합니다. */
+@media (prefers-reduced-motion: reduce) {
+  #bwk-quote-app .bwk-button,
+  #bwk-quote-app :is(input, textarea) { transition: none; }
+}
+
+/* 인쇄 시에는 편집 UI를 숨기고 A4 견적서만 출력합니다. */
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  html,
+  body { width: 210mm; min-height: 297mm; background: #fff !important; }
+  #bwk-quote-app .bwk-topbar,
+  #bwk-quote-app .bwk-editor,
+  #bwk-quote-app .bwk-preview-label { display: none !important; }
+  #bwk-quote-app .bwk-workspace { display: block; width: auto; margin: 0; padding: 0; }
+  #bwk-quote-app .bwk-preview-panel { position: static; width: auto; height: auto; overflow: visible; }
+  #bwk-quote-app .bwk-paper { width: 210mm; min-height: 297mm; margin: 0; padding: 15mm 16mm 12mm; box-shadow: none; transform: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

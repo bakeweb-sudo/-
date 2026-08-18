@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <!-- 문서의 문자 인코딩을 한국어에 맞게 설정합니다. -->
+  <meta charset="UTF-8">
+  <!-- 모바일에서 실제 화면 너비로 렌더링되도록 설정합니다. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 브라우저 탭에 표시할 서비스 이름입니다. -->
+  <title>BAKEWEB 견적서 메이커</title>
+  <!-- 검색 결과와 공유 화면에 사용할 간단한 설명입니다. -->
+  <meta name="description" content="BAKEWEB 웹사이트 제작 견적서를 작성하고 PDF로 저장하는 도구">
+  <!-- 고유한 스타일시트만 연결해 다른 프로젝트 스타일과 분리합니다. -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 전체 앱을 고유한 bwk 접두사 wrapper로 감쌉니다. -->
+  <main class="bwk-app" id="bwk-quote-app">
+    <!-- 화면 상단의 브랜드와 주요 동작 영역입니다. -->
+    <header class="bwk-topbar">
+      <a class="bwk-brand" href="#bwk-editor" aria-label="BAKEWEB 견적서 편집기로 이동">
+        <!-- 제공된 시그니처 이미지를 브랜드 로고로 사용합니다. -->
+        <img class="bwk-brand__logo" src="assets/bakeweb-signature.png" alt="BAKEWEB">
+        <span class="bwk-brand__copy">
+          <strong>견적서 메이커</strong>
+          <small>깔끔하게 작성하고 PDF로 저장하세요.</small>
+        </span>
+      </a>
+      <!-- PDF 버튼은 브라우저 인쇄 창을 열어 PDF 저장을 지원합니다. -->
+      <button class="bwk-button bwk-button--primary" id="bwk-print-button" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        PDF로 저장
+      </button>
+    </header>
+
+    <!-- 좌측 편집기와 우측 A4 미리보기를 나누는 작업 영역입니다. -->
+    <div class="bwk-workspace">
+      <!-- 사용자가 견적 정보를 입력하는 편집 패널입니다. -->
+      <section class="bwk-editor" id="bwk-editor" aria-labelledby="bwk-editor-title">
+        <div class="bwk-editor__heading">
+          <div>
+            <span class="bwk-eyebrow">QUOTE BUILDER</span>
+            <h1 id="bwk-editor-title">견적 내용을 입력하세요</h1>
+          </div>
+          <span class="bwk-save-status" id="bwk-save-status" aria-live="polite">브라우저에 자동 저장</span>
+        </div>
+
+        <!-- 문서의 기본 메타 정보를 입력합니다. -->
+        <fieldset class="bwk-form-section">
+          <legend>기본 정보</legend>
+          <div class="bwk-form-grid bwk-form-grid--two">
+            <label class="bwk-field">
+              <span>견적서 번호</span>
+              <input id="bwk-quote-number" type="text" value="BW-2026-001" autocomplete="off">
+            </label>
+            <label class="bwk-field">
+              <span>발행일</span>
+              <input id="bwk-issue-date" type="date">
+            </label>
+            <label class="bwk-field">
+              <span>유효기간</span>
+              <input id="bwk-valid-days" type="number" value="14" min="1" max="365" inputmode="numeric">
+              <small>발행일로부터 며칠 동안 유효한지 입력합니다.</small>
+            </label>
+            <label class="bwk-field">
+              <span>프로젝트명</span>
+              <input id="bwk-project-name" type="text" placeholder="예: 브랜드 홈페이지 제작">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 견적서를 받을 고객 정보를 입력합니다. -->
+        <fieldset class="bwk-form-section">
+          <legend>고객 정보</legend>
+          <div class="bwk-form-grid bwk-form-grid--two">
+            <label class="bwk-field">
+              <span>회사 또는 고객명</span>
+              <input id="bwk-client-name" type="text" placeholder="예: 주식회사 베이크">
+            </label>
+            <label class="bwk-field">
+              <span>담당자명</span>
+              <input id="bwk-client-manager" type="text" placeholder="예: 김담당">
+            </label>
+            <label class="bwk-field">
+              <span>연락처</span>
+              <input id="bwk-client-phone" type="tel" placeholder="010-0000-0000">
+            </label>
+            <label class="bwk-field">
+              <span>이메일</span>
+              <input id="bwk-client-email" type="email" placeholder="hello@example.com">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 견적 항목을 동적으로 추가하고 계산하는 영역입니다. -->
+        <fieldset class="bwk-form-section">
+          <div class="bwk-legend-row">
+            <legend>견적 항목</legend>
+            <button class="bwk-button bwk-button--outline bwk-button--small" id="bwk-add-item" type="button">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              항목 추가
+            </button>
+          </div>
+          <!-- 자바스크립트가 견적 항목 행을 이 컨테이너에 생성합니다. -->
+          <div class="bwk-items" id="bwk-items"></div>
+          <div class="bwk-tax-control">
+            <label class="bwk-switch-row" for="bwk-tax-included">
+              <span>
+                <strong>입력 금액에 부가세 포함</strong>
+                <small>기본값입니다. 입력한 금액에서 공급가액과 부가세를 자동 분리합니다.</small>
+              </span>
+              <input id="bwk-tax-included" type="checkbox" checked>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 작업 범위와 결제 조건을 자유롭게 입력합니다. -->
+        <fieldset class="bwk-form-section">
+          <legend>안내 및 조건</legend>
+          <div class="bwk-form-grid">
+            <label class="bwk-field">
+              <span>작업 범위</span>
+              <!-- 공통 작업 범위를 기본값으로 제공하며 프로젝트별 내용을 이어서 추가할 수 있습니다. -->
+              <textarea id="bwk-scope" rows="9">- 홈페이지 기획 및 페이지 구조 구성
+- PC·노트북·모바일 반응형 디자인
+- 아임웹 페이지 제작 및 기본 설정
+- 제공된 원고 및 이미지 적용
+- 메뉴·버튼·문의 링크 연결
+- 화면 크기별 반응형 및 기본 동작 점검
+- 최종 검수 및 오픈 전 확인
+
+※ 세부 페이지 수와 추가 기능은 견적 항목에 기재된 범위를 기준으로 합니다.</textarea>
+            </label>
+            <label class="bwk-field">
+              <span>결제 조건</span>
+              <textarea id="bwk-payment-terms" rows="3">계약금 50% 입금 후 작업을 시작하며, 잔금 50% 입금 후 사이트를 최종 이전합니다.</textarea>
+            </label>
+            <label class="bwk-field">
+              <span>추가 안내</span>
+              <textarea id="bwk-note" rows="3">본 견적은 협의된 작업 범위를 기준으로 하며, 범위 변경 시 비용과 일정이 조정될 수 있습니다.</textarea>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 입력 데이터를 초기 상태로 되돌리는 보조 동작입니다. -->
+        <button class="bwk-button bwk-button--ghost" id="bwk-reset-button" type="button">입력 내용 초기화</button>
+      </section>
+
+      <!-- 실제 PDF에 인쇄될 A4 비율의 견적서 미리보기입니다. -->
+      <section class="bwk-preview-panel" aria-label="견적서 미리보기">
+        <div class="bwk-preview-label">
+          <span>PDF 미리보기</span>
+          <small>A4 세로 · 자동 반영</small>
+        </div>
+        <article class="bwk-paper" id="bwk-paper">
+          <!-- 견적서 상단의 브랜드와 문서 정보를 배치합니다. -->
+          <header class="bwk-paper__header">
+            <div class="bwk-paper__brand">
+              <img src="assets/bakeweb-signature.png" alt="BAKEWEB">
+              <span>WEB DESIGN STUDIO</span>
+            </div>
+            <div class="bwk-paper__title">
+              <span>QUOTATION</span>
+              <h2>견적서</h2>
+            </div>
+          </header>
+
+          <!-- 고객과 문서 메타 정보를 두 열로 표시합니다. -->
+          <div class="bwk-paper__intro">
+            <div class="bwk-client-block">
+              <span class="bwk-paper-label">TO.</span>
+              <strong id="bwk-preview-client">고객명을 입력해 주세요</strong>
+              <p id="bwk-preview-manager">담당자 정보</p>
+              <p id="bwk-preview-contact">연락처 · 이메일</p>
+            </div>
+            <dl class="bwk-meta-list">
+              <div><dt>견적번호</dt><dd id="bwk-preview-number">BW-2026-001</dd></div>
+              <div><dt>발행일</dt><dd id="bwk-preview-date">-</dd></div>
+              <div><dt>유효기간</dt><dd id="bwk-preview-valid">-</dd></div>
+            </dl>
+          </div>
+
+          <!-- 프로젝트 이름을 견적의 핵심 제목으로 강조합니다. -->
+          <div class="bwk-project-band">
+            <span>PROJECT</span>
+            <strong id="bwk-preview-project">프로젝트명을 입력해 주세요</strong>
+          </div>
+
+          <!-- 견적 항목과 금액을 표로 표시합니다. -->
+          <div class="bwk-table-wrap">
+            <table class="bwk-quote-table">
+              <thead>
+                <tr><th>항목</th><th>설명</th><th>수량</th><th id="bwk-preview-price-label">단가(부가세 포함)</th><th>금액</th></tr>
+              </thead>
+              <tbody id="bwk-preview-items"></tbody>
+            </table>
+          </div>
+
+          <!-- 공급가액, 부가세, 총액을 정렬해 표시합니다. -->
+          <div class="bwk-total-box">
+            <div><span>공급가액</span><strong id="bwk-preview-subtotal">0원</strong></div>
+            <div id="bwk-preview-tax-row"><span id="bwk-preview-tax-label">부가세 (포함)</span><strong id="bwk-preview-tax">0원</strong></div>
+            <div class="bwk-total-box__grand"><span>총 견적금액</span><strong id="bwk-preview-total">0원</strong></div>
+          </div>
+
+          <!-- 작업 범위와 계약 관련 안내를 본문 하단에 표시합니다. -->
+          <div class="bwk-paper__details">
+            <section><h3>작업 범위</h3><p id="bwk-preview-scope">입력된 작업 범위가 표시됩니다.</p></section>
+            <section><h3>결제 조건</h3><p id="bwk-preview-payment">입력된 결제 조건이 표시됩니다.</p></section>
+            <section><h3>안내 사항</h3><p id="bwk-preview-note">입력된 안내 사항이 표시됩니다.</p></section>
+          </div>
+
+          <!-- 사업자 정보는 사용자 제공 내용을 그대로 고정 표시합니다. -->
+          <footer class="bwk-paper__footer">
+            <div class="bwk-company-info">
+              <strong>BAKEWEB</strong>
+              <p>대표 황수희 · 사업자등록번호 609-31-11249</p>
+              <p>경상북도 영주시 대학로86번길 14 2층</p>
+              <p>010-7347-0321</p>
+            </div>
+            <div class="bwk-signature">
+              <span>위와 같이 견적합니다.</span>
+              <strong>BAKEWEB 대표 황수희</strong>
+            </div>
+          </footer>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <!-- 자바스크립트는 문서 끝에서 불러와 화면 생성을 방해하지 않습니다. -->
+  <script src="app.js"></script>
+</body>
+</html>
