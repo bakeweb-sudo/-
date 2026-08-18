@@ -260,9 +260,15 @@
 
           <!-- 작업 범위와 계약 관련 안내를 본문 하단에 표시합니다. -->
           <div class="bwk-paper__details">
+            <!-- 작업 범위는 내용이 길어질 수 있어 전체 폭을 사용합니다. -->
             <section><h3>작업 범위</h3><p id="bwk-preview-scope">입력된 작업 범위가 표시됩니다.</p></section>
-            <section><h3>결제 조건</h3><p id="bwk-preview-payment">입력된 결제 조건이 표시됩니다.</p></section>
-            <section><h3>안내 사항</h3><p id="bwk-preview-note">입력된 안내 사항이 표시됩니다.</p></section>
+            <!-- 결제 조건과 안내 사항은 A4 세로 공간을 절약하도록 두 열로 병렬 배치합니다. -->
+            <div class="bwk-paper__terms">
+              <!-- 결제 조건은 왼쪽 열에 표시합니다. -->
+              <section><h3>결제 조건</h3><p id="bwk-preview-payment">입력된 결제 조건이 표시됩니다.</p></section>
+              <!-- 안내 사항은 오른쪽 열에 표시합니다. -->
+              <section><h3>안내 사항</h3><p id="bwk-preview-note">입력된 안내 사항이 표시됩니다.</p></section>
+            </div>
           </div>
 
           <!-- 사업자 정보는 사용자 제공 내용을 그대로 고정 표시합니다. -->
